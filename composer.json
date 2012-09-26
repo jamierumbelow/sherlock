@@ -1,16 +1,16 @@
 {
-    "name": "kriswallsmith/assetic",
+    "name": "jamierumbelow/sherlock",
     "minimum-stability": "dev",
-    "description": "Asset Management for PHP",
-    "keywords": ["assets", "compression", "minification"],
-    "homepage": "https://github.com/kriswallsmith/assetic",
+    "description": "Simple, elegant asset pipeline for PHP",
+    "keywords": ["assets", "pipeline", "compression", "minification", "coffescript", "scss", "sass"],
+    "homepage": "https://github.com/jamierumbelow/sherlock",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Kris Wallsmith",
-            "email": "kris.wallsmith@gmail.com",
-            "homepage": "http://kriswallsmith.net/"
+            "name": "Jamie Rumbelow",
+            "email": "jamie@jamierumbelow.net",
+            "homepage": "http://jamierumbelow.net/"
         }
     ],
     "require": {
