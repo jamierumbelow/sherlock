@@ -45,3 +45,5 @@ Sherlock will try to find it in the `stylesheets` or `css` directories, as well 
 	app/assets/stylesheets/some_file.css
 	app/assets/css/some_file.css
 	app/assets/some_file.css
+
+Every file is routed through its appropriate engine. For `.css` and `.js` files, this does nothing. If we request a file with a different extension, such as `.coffee`, assuming our custom engine is set up--in the case of CoffeeScript, it's always available--Sherlock will parse the file and return its processed form.
