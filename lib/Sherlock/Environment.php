@@ -63,9 +63,16 @@ class Environment implements \ArrayAccess
 	{
 		foreach ($this->directories as $directory)
 		{
-			if (file_exists($directory . '/' . $filename))
+			$path = (substr($directory, strlen($directory)-1) == '/') ? 
+					$directory :
+					$directory . '/';
+			$path .= (substr($filename, 0, 1) == '/') ? 
+					substr($filename, 1) :
+					$filename;
+
+			if (file_exists($path))
 			{
-				return $directory . '/' . $filename;
+				return $path;
 			}
 		}
 
