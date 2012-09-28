@@ -41,4 +41,19 @@ class TestEnvironment extends \PHPUnit_Framework_TestCase
 		$env = new Environment();
 		$env->find('missing_file.css');
 	}
+
+	// public function testFindReturnsAssetInstance()
+	// {
+	// 	$env = new Environment('tests/support/assets');
+
+	// 	$this->assertEquals('Sherlock\Asset', get_class($env->find('test.css')));
+	// }
+
+	public function testResolveLocatesFilePathWithinDirectories()
+	{
+		$env = new Environment('tests/support/assets');
+
+		$this->assertFalse($env->resolve('missing_file.css'));
+		$this->assertEquals('tests/support/assets/test.css', $env->resolve('test.css'));
+	}	
 }

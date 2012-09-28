@@ -8,6 +8,7 @@
 
 namespace Sherlock;
 
+use Sherlock\Asset;
 use Sherlock\Exceptions\MissingFile;
 
 class Environment implements \ArrayAccess
@@ -36,15 +37,39 @@ class Environment implements \ArrayAccess
 	}
 
 	/**
-	 * Fetch a file from the filesystem, compiling
-	 * or whathaveyou if needs be
+	 * Search for a file on the filesystem and create a new
+	 * wrapper instance to represent it
 	 *
 	 * @var string $filename The path + name of the file
 	 * @return Sherlock\Asset The asset object
 	 **/
 	public function find($filename)
 	{
-		throw new MissingFile($filename);
+		$asset = new Asset($filename, $this);
+
+		if (!$asset->exists())
+		{
+			throw new MissingFile($filename);
+		}
+	}
+
+	/**
+	 * Given the name of a file, resolve the filename and return
+	 * the resolved path if it exists and FALSE if it doesn't
+	 *
+	 * @return FALSE or string
+	 */
+	public function resolve($filename)
+	{
+		foreach ($this->directories as $directory)
+		{
+			if (file_exists($directory . '/' . $filename))
+			{
+				return $directory . '/' . $filename;
+			}
+		}
+
+		return FALSE;
 	}
 
 	/**
