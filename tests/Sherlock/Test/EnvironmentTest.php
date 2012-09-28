@@ -16,4 +16,21 @@ class TestEnvironment extends \PHPUnit_Framework_TestCase
 		$env = new Environment();
 		$this->assertEquals(getcwd(), $env->directories[0]);
 	}
+
+	public function testImplementsArrayAccess()
+	{
+		$env = new Environment();
+		$this->assertTrue(in_array('ArrayAccess', class_implements($env)), 'Sherlock\Environment does not implement ArrayAccess');
+	}
+
+	public function testOffsetGetCallsFind()
+	{
+		$env = $this->getMock('Sherlock\Environment', array( 'find' ));
+		$env->expects($this->once())
+			->method('find')
+			->with($this->equalTo('stylesheet.css'))
+			->will($this->returnValue(TRUE));
+
+		$this->assertTrue($env['stylesheet.css']);
+	}
 }

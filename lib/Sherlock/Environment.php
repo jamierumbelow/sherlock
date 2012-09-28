@@ -8,7 +8,7 @@
 
 namespace Sherlock;
 
-class Environment
+class Environment implements \ArrayAccess
 {
 	/**
 	 * The Sherlock virtual load path; a list of
@@ -32,4 +32,16 @@ class Environment
 
 		$this->directories[] = $root_dir;
 	}
+
+	/**
+	 * ArrayAccess implementation
+	 */
+	public function offsetGet($offset)
+	{
+		return $this->find($offset);
+	}
+
+	public function offsetExists($offset) { }
+	public function offsetSet($offset, $value) { }
+	public function offsetUnset($offset) { }
 }
