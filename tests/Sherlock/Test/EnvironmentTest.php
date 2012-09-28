@@ -33,4 +33,12 @@ class TestEnvironment extends \PHPUnit_Framework_TestCase
 
 		$this->assertTrue($env['stylesheet.css']);
 	}
+
+	public function testMissingPathThrowsException()
+	{
+		$this->setExpectedException('Sherlock\Exceptions\MissingFile');
+
+		$env = new Environment();
+		$env->find('missing_file.css');
+	}
 }

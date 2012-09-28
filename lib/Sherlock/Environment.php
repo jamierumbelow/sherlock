@@ -8,6 +8,8 @@
 
 namespace Sherlock;
 
+use Sherlock\Exceptions\MissingFile;
+
 class Environment implements \ArrayAccess
 {
 	/**
@@ -31,6 +33,18 @@ class Environment implements \ArrayAccess
 		}
 
 		$this->directories[] = $root_dir;
+	}
+
+	/**
+	 * Fetch a file from the filesystem, compiling
+	 * or whathaveyou if needs be
+	 *
+	 * @var string $filename The path + name of the file
+	 * @return Sherlock\Asset The asset object
+	 **/
+	public function find($filename)
+	{
+		throw new MissingFile($filename);
 	}
 
 	/**
