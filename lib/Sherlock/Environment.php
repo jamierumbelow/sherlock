@@ -51,6 +51,10 @@ class Environment implements \ArrayAccess
 		{
 			throw new MissingFile($filename);
 		}
+		else
+		{
+			return $asset;
+		}
 	}
 
 	/**
