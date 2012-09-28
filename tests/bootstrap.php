@@ -6,4 +6,5 @@
  * @copyright Copyright (c) 2012, Jamie Rumbelow <http://jamierumbelow.net>
  */
 
-// Strap dat boot
+$loader = include(__DIR__ . '/../vendor/autoload.php');
+$loader->add('Sherlock\Test', __DIR__);
