@@ -20,7 +20,21 @@ class Asset
 	 *
 	 * @var string
 	 **/
-	public $filename;
+	public $filename = '';
+
+	/**
+	 * The file extension
+	 *
+	 * @var string
+	 **/
+	public $extension = '';
+
+	/**
+	 * The asset's content
+	 *
+	 * @var string
+	 */
+	public $content = '';
 
 	/**
 	 * The asset's `Environment` instance
@@ -39,6 +53,7 @@ class Asset
 	{
 		$this->filename = $filename;
 		$this->environment = $environment;
+		$this->extension = pathinfo($filename, PATHINFO_EXTENSION);
 	}
 
 	/**
@@ -49,5 +64,48 @@ class Asset
 	public function exists()
 	{
 		return (bool)$this->environment->resolve($this->filename);
+	}
+
+	/**
+	 * Refresh the content from the filesystem
+	 **/
+	public function refresh()
+	{
+		$path = $this->environment->resolve($this->filename);
+		$this->content = file_get_contents($path);
+	}
+
+	/**
+	 * Process this asset through the engine pipeline
+	 */
+	public function process()
+	{
+		if (isset($this->environment->extensions[$this->extension]))
+		{
+			foreach ($this->environment->extensions[$this->extension] as $engine)
+			{
+				$engobj = new $engine();
+				$this->content = $engobj->render($this);
+				unset($enjobj);
+			}
+		}
+	}
+
+	/**
+	 * We're requesting the asset as a string. This means we're
+	 * trying to echo it out or store it somewhere. Fetch it if we
+	 * need to, process it and return it
+	 *
+	 * @return string
+	 **/
+	public function __toString()
+	{
+		if (empty($this->content))
+		{
+			$this->refresh();
+			$this->process();
+		}
+
+		return $this->content;
 	}
 }

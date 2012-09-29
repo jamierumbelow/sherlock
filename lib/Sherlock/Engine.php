@@ -10,5 +10,11 @@ namespace Sherlock;
 
 interface Engine
 {
-	
+	/**
+	 * Render the content through the engine and return it as a string
+	 *
+	 * @var Sherlock\Asset $asset Asset instance
+	 * @return string
+	 **/
+	public function render($asset);
 }

@@ -6,13 +6,13 @@
  * @copyright Copyright (c) 2012, Jamie Rumbelow <http://jamierumbelow.net>
  */
 
-namespace Sherlock\Engines;
+namespace Sherlock\Test;
 use Sherlock\Engine;
 
-class CSS implements Engine
+class TestEngine implements Engine
 {
-	/**
-	 * Don't do anything to CSS files
-	 */
-	public function render($asset) { return $asset->content; }
+	public function render($asset)
+	{
+		return '---TEST---' . $asset->content . '---TEST---';
+	}
 }

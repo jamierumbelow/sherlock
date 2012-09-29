@@ -11,5 +11,8 @@ use Sherlock\Engine;
 
 class JS implements Engine
 {
-	
+	/**
+	 * Don't do anything to JS files
+	 */
+	public function render($asset) { return $asset->content; }
 }
