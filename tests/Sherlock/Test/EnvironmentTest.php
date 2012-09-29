@@ -48,6 +48,36 @@ class TestEnvironment extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('Sherlock\Asset', get_class($env->find('test.css')));
 	}
 
+	public function testRegister()
+	{
+		$env = new Environment();
+		$env->extensions = array();
+
+		$env->register('css', 'Sherlock\Engines\CSS');
+		$env->register('js', new \Sherlock\Engines\JS());
+
+		$this->assertTrue(in_array('Sherlock\Engines\CSS', $env->extensions['css']));
+		$this->assertTrue(in_array('Sherlock\Engines\JS', $env->extensions['js']));
+	}
+
+	public function testRegisterWithIncorrectEngine()
+	{
+		$this->setExpectedException('Sherlock\Exceptions\InvalidEngine');
+		$env = new Environment();
+
+		$env->register('weird', 'Sherlock\Engines\WeirdEngine');
+	}
+
+	public function testEmptyRegistry()
+	{
+		$env = new Environment();
+		$env->extensions = array( 'test' );
+
+		$env->emptyRegistry();
+
+		$this->assertEmpty($env->extensions);
+	}
+
 	public function testResolveLocatesFilePathWithinDirectoriesWithWeirdSlashes()
 	{
 		$env = new Environment('tests/support/assets');

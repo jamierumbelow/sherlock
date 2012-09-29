@@ -9,7 +9,6 @@
 namespace Sherlock;
 
 use Sherlock\Asset;
-use Sherlock\Exceptions\MissingFile;
 
 class Environment implements \ArrayAccess
 {
@@ -20,6 +19,14 @@ class Environment implements \ArrayAccess
 	 * @var array
 	 */
 	public $directories = array();
+
+	/**
+	 * We map file extensions to engines... here's
+	 * where we store the mappings
+	 *
+	 * @var array
+	 */
+	public $extensions = array();
 
 	/**
 	 * Constructor.
@@ -49,7 +56,7 @@ class Environment implements \ArrayAccess
 
 		if (!$asset->exists())
 		{
-			throw new MissingFile($filename);
+			throw new Exceptions\MissingFile($filename);
 		}
 		else
 		{
@@ -81,6 +88,44 @@ class Environment implements \ArrayAccess
 		}
 
 		return FALSE;
+	}
+
+	/**
+	 * Register a new extension to an engine
+	 *
+	 * @var string $ext The extension (without the period, ie. 'css')
+	 * @var string/object $engine The engine instance / class name
+	 **/
+	public function register($ext, $engine)
+	{
+		if (!isset($this->extensions[$ext]))
+		{
+			$this->extensions[$ext] = array();
+		}
+
+		if (is_string($engine) && 
+			class_exists($engine) && 
+			in_array('Sherlock\Engine', class_implements($engine)))
+		{
+			$this->extensions[$ext][] = $engine;
+		}
+		elseif (is_object($engine) &&
+				in_array('Sherlock\Engine', class_implements($engine)))
+		{
+			$this->extensions[$ext][] = get_class($engine);
+		}
+		else
+		{
+			throw new Exceptions\InvalidEngine($engine);
+		}
+	}
+
+	/**
+	 * Empty the extension/engine registry
+	 **/
+	public function emptyRegistry()
+	{
+		$this->extensions = array();
 	}
 
 	/**

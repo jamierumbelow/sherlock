@@ -13,11 +13,13 @@ use Sherlock\Asset;
 
 class AssetTest extends \PHPUnit_Framework_TestCase
 {
-	public function testConstructorStoresName()
+	public function testConstructorStoresNameAndEnv()
 	{
-		$asset = new Asset('test.css', new Environment());
+		$env = new Environment();
+		$asset = new Asset('test.css', $env);
 
 		$this->assertEquals('test.css', $asset->filename);
+		$this->assertEquals($env, $asset->environment);
 	}
 
 	public function testExists()
