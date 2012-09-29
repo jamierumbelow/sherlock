@@ -1,4 +1,4 @@
-Sherlock
+Sherlock [![Build Status](https://secure.travis-ci.org/jamierumbelow/sherlock.png?branch=master)](http://travis-ci.org/jamierumbelow/sherlock)
 ========
 
 Sherlock provides PHP asset pipelining so simple, it's elementary. It's inspired by Sprockets, django-pipeline and Assetic, and aims to create a simpler and more approachable asset pipeline for PHP developers.
