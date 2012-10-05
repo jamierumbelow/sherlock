@@ -21,6 +21,13 @@ class Environment implements \ArrayAccess
 	public $directories = array();
 
 	/**
+	 * Where do we compile assets to?
+	 *
+	 * @var string
+	 */
+	public $compileDirectory = '';
+
+	/**
 	 * We map file extensions to engines... here's
 	 * where we store the mappings
 	 *
@@ -31,16 +38,13 @@ class Environment implements \ArrayAccess
 	/**
 	 * Constructor.
 	 *
-	 * @var string $root_dir Root directory
+	 * @var string $rootDir Root directory
+	 * @var string $compileDir Compile directory
 	 **/
-	public function __construct($root_dir = FALSE)
+	public function __construct($rootDir = FALSE, $compileDir = FALSE)
 	{
-		if (!$root_dir)
-		{
-			$root_dir = getcwd();
-		}
-
-		$this->directories[] = $root_dir;
+		$this->directories[] = ($rootDir) ?: getcwd();
+		$this->compileDirectory = ($compileDir) ?: getcwd();
 	}
 
 	/**

@@ -11,10 +11,13 @@ use Sherlock\Environment;
 
 class TestEnvironment extends \PHPUnit_Framework_TestCase
 {
-	public function testDefaultDirIsWorkingDir()
+	public function testDefaultDirsAreWorkingDir()
 	{
 		$env = new Environment();
 		$this->assertEquals(getcwd(), $env->directories[0]);
+
+		$env = new Environment('blah');
+		$this->assertEquals(getcwd(), $env->compileDirectory);
 	}
 
 	public function testImplementsArrayAccess()
