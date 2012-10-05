@@ -11,7 +11,7 @@ echo $assets['some_file.css'];
 echo $assets['application.js'];
 
 $bundle = new Sherlock\Bundle(array( 'stylesheets/some_file.css', 'stylesheets/another.css' ));
-$bundle->compile('application.js');
+$bundle->compile('application.css');
 
 $server = new Sherlock\Server($assets);
 ```
