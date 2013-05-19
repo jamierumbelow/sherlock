@@ -86,7 +86,7 @@ class Asset
 			{
 				$engobj = new $engine();
 				$this->content = $engobj->render($this);
-				unset($enjobj);
+				unset($engobj);
 			}
 		}
 	}
